@@ -45,7 +45,9 @@ def _make_request(payload: dict, retry_count: int = 0) -> dict:
     headers = {"Access-Token": TIKTOK_ACCESS_TOKEN}
 
     try:
-        resp = requests.post(REPORT_URL, json=payload, headers=headers, timeout=30)
+        import json
+        params = {k: json.dumps(v) if isinstance(v, (list, dict)) else v for k, v in payload.items()}
+        resp = requests.get(REPORT_URL, params=params, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
     except requests.RequestException as e:
