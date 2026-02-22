@@ -173,8 +173,12 @@ def main():
             "campaign_actions": campaign_actions,
             "creative_fatigue": creative_fatigue,
         }
-        insight_text = generate_insight(insight_input)
-        logger.info("인사이트 생성 완료")
+        try:
+            insight_text = generate_insight(insight_input)
+            logger.info("인사이트 생성 완료")
+        except Exception as e:
+            logger.warning(f"AI 인사이트 생성 실패 (건너뜀): {e}")
+            insight_text = ""
 
         # 7. Slack 메시지 조립
         logger.info("Slack 메시지 조립 중...")
@@ -198,7 +202,8 @@ def main():
         ))
 
         blocks.extend(build_frequency_block(frequency_data))
-        blocks.extend(build_insight_block(insight_text))
+        if insight_text and not insight_text.startswith("AI 인사이트 생성 실패"):
+            blocks.extend(build_insight_block(insight_text))
 
         # 8. Slack 발송
         logger.info("Slack 리포트 발송 중...")

@@ -320,7 +320,20 @@ def build_insight_block(insight_text: str) -> list[dict]:
     ]
 
 
+def _truncate_blocks(blocks: list[dict]) -> list[dict]:
+    # Slack 제한: 최대 50개 블록, 텍스트 최대 3000자
+    truncated = []
+    for b in blocks[:50]:
+        if b.get("type") == "section" and "text" in b:
+            text = b["text"].get("text", "")
+            if len(text) > 3000:
+                b["text"]["text"] = text[:2997] + "..."
+        truncated.append(b)
+    return truncated
+
+
 def send_report(blocks: list[dict]) -> bool:
+    blocks = _truncate_blocks(blocks)
     payload = {"blocks": blocks}
     try:
         resp = requests.post(SLACK_WEBHOOK_URL, json=payload, timeout=10)
