@@ -74,7 +74,7 @@ def _build_campaign_7d_avg(campaign_7d_data: list[dict]) -> dict:
             continue
         avg = {}
         metrics = ["spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-                    "conversions", "cost_per_conversion", "cost_per_result", "frequency"]
+                    "conversion", "cost_per_conversion", "cost_per_result", "frequency"]
         for m in metrics:
             total = sum(r.get(m, 0.0) for r in rows)
             avg[f"{m}_avg"] = round(total / n, 2)

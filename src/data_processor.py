@@ -7,7 +7,7 @@ def _safe_change_pct(today_val: float, yesterday_val: float) -> float:
 def calculate_daily_change(today: dict, yesterday: dict) -> dict:
     metrics = [
         "spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-        "conversions", "cost_per_conversion", "cost_per_result", "frequency",
+        "conversion", "cost_per_conversion", "cost_per_result", "frequency",
     ]
     result = {}
     for m in metrics:
@@ -23,7 +23,7 @@ def calculate_weekly_average(week_data: list[dict]) -> dict:
 
     metrics = [
         "spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-        "conversions", "cost_per_conversion", "cost_per_result", "frequency",
+        "conversion", "cost_per_conversion", "cost_per_result", "frequency",
     ]
     result = {}
     n = len(week_data)
@@ -36,7 +36,7 @@ def calculate_weekly_average(week_data: list[dict]) -> dict:
 def compare_with_weekly(today: dict, weekly_avg: dict) -> dict:
     metrics = [
         "spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-        "conversions", "cost_per_conversion", "cost_per_result", "frequency",
+        "conversion", "cost_per_conversion", "cost_per_result", "frequency",
     ]
     result = {}
     for m in metrics:
@@ -51,7 +51,7 @@ def rank_campaigns(campaigns: list[dict], sort_by: str = "spend", top_n: int = 5
     return sorted_list[:top_n]
 
 
-def rank_creatives(ads: list[dict], sort_by: str = "conversions", top_n: int = 5) -> list[dict]:
+def rank_creatives(ads: list[dict], sort_by: str = "conversion", top_n: int = 5) -> list[dict]:
     sorted_list = sorted(ads, key=lambda x: x.get(sort_by, 0), reverse=True)
     return sorted_list[:top_n]
 
@@ -100,7 +100,7 @@ def build_report_data(
     account_summary.update(weekly_comparison)
 
     top_campaigns = rank_campaigns(campaigns_today, sort_by="spend")
-    top_creatives = rank_creatives(ads_today, sort_by="conversions")
+    top_creatives = rank_creatives(ads_today, sort_by="conversion")
 
     for ad in ads_today:
         ad["completion_rate"] = calculate_completion_rate(ad)

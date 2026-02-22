@@ -13,17 +13,17 @@ REPORT_URL = f"{TIKTOK_API_BASE}/report/integrated/get/"
 
 ACCOUNT_METRICS = [
     "spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-    "conversions", "cost_per_conversion", "cost_per_result", "frequency",
+    "conversion", "cost_per_conversion", "cost_per_result", "frequency",
 ]
 
 CAMPAIGN_METRICS = [
     "spend", "impressions", "reach", "clicks", "ctr", "cpc", "cpm",
-    "conversions", "cost_per_conversion", "cost_per_result", "frequency",
+    "conversion", "cost_per_conversion", "cost_per_result", "frequency",
 ]
 
 AD_METRICS = [
     "spend", "impressions", "clicks", "ctr", "cpc",
-    "conversions", "cost_per_conversion",
+    "conversion", "cost_per_conversion",
     "video_play_actions", "video_watched_2s", "video_watched_6s",
     "video_views_p25", "video_views_p50", "video_views_p75", "video_views_p100",
     "average_video_play", "likes", "comments", "shares",

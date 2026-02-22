@@ -8,7 +8,7 @@ METRIC_CONFIG = {
     "spend": ("비용", True),
     "ctr": ("CTR", False),
     "cpc": ("CPC", True),
-    "conversions": ("전환수", False),
+    "conversion": ("전환수", False),
     "cost_per_conversion": ("전환단가", True),
     "frequency": ("Frequency", True),
 }
@@ -32,7 +32,7 @@ def detect_account_anomalies(today: dict, yesterday: dict, weekly_avg: dict) -> 
         ("spend", "spend_surge", "spend_save"),
         ("ctr", "ctr_rise", "ctr_drop"),
         ("cpc", "cpc_surge", "cpc_save"),
-        ("conversions", "conversion_rise", "conversion_drop"),
+        ("conversion", "conversion_rise", "conversion_drop"),
         ("cost_per_conversion", "conversion_cost_surge", "conversion_cost_save"),
     ]
 
@@ -148,13 +148,13 @@ def detect_campaign_actions(
                 })
 
         # 전환수 7일 평균 대비 감소
-        conv_today = camp.get("conversions", 0.0)
+        conv_today = camp.get("conversion", 0.0)
         conv_avg = avg.get("conversions_avg", 0.0)
         if conv_avg > 0:
             conv_change = _safe_change_pct(conv_today, conv_avg)
             if conv_change / 100 <= THRESHOLDS["campaign_conversion_drop_7d"]:
                 issues.append({
-                    "metric": "conversions",
+                    "metric": "conversion",
                     "label": "전환수",
                     "description": f"전환수가 7일 평균 대비 {conv_change:+.1f}% 감소 ({int(conv_avg)} \u2192 {int(conv_today)})",
                     "action": "예산 소진, 소재 리뷰 상태, 오디언스 포화도 확인",

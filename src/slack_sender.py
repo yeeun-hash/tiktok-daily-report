@@ -45,7 +45,7 @@ def build_summary_block(account_data: dict) -> list[dict]:
     clicks = account_data.get("clicks", 0)
     ctr = account_data.get("ctr", 0)
     cpc = account_data.get("cpc", 0)
-    conversions = account_data.get("conversions", 0)
+    conversions = account_data.get("conversion", 0)
     cpa = account_data.get("cost_per_conversion", 0)
     frequency = account_data.get("frequency", 0)
 
@@ -133,7 +133,7 @@ def build_campaign_ranking_block(campaigns: list[dict], top_n: int = 5) -> list[
         name = c.get("campaign_name", "")
         spend = format_currency(c.get("spend", 0))
         ctr = c.get("ctr", 0)
-        conv = int(c.get("conversions", 0))
+        conv = int(c.get("conversion", 0))
         cpa = format_currency(c.get("cost_per_conversion", 0))
         freq = c.get("frequency", 0)
         freq_e = _freq_emoji(freq)
@@ -223,7 +223,7 @@ def build_creative_ranking_block(creatives: list[dict], top_n: int = 5) -> list[
         spend = format_currency(ad.get("spend", 0))
         ctr = ad.get("ctr", 0)
         cr = ad.get("completion_rate", 0)
-        conv = int(ad.get("conversions", 0))
+        conv = int(ad.get("conversion", 0))
 
         lines.append(
             f"*{i}. {name}*\n"
