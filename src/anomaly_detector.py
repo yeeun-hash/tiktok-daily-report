@@ -16,7 +16,7 @@ METRIC_CONFIG = {
 
 def _format_value(metric: str, value: float) -> str:
     if metric in ("spend", "cpc", "cost_per_conversion", "cpm", "cost_per_result"):
-        return f"\u20a9{int(value):,}"
+        return f"${int(value):,}"
     if metric in ("ctr",):
         return f"{value:.2f}%"
     if metric == "frequency":
@@ -142,7 +142,7 @@ def detect_campaign_actions(
                 issues.append({
                     "metric": "cost_per_conversion",
                     "label": "전환단가",
-                    "description": f"전환단가가 7일 평균 대비 {cpa_change:+.1f}% 상승 (\u20a9{int(cpa_avg):,} \u2192 \u20a9{int(cpa_today):,})",
+                    "description": f"전환단가가 7일 평균 대비 {cpa_change:+.1f}% 상승 (${int(cpa_avg):,} \u2192 ${int(cpa_today):,})",
                     "action": "입찰 전략 변경 또는 전환 최적화 이벤트 재설정 검토",
                     "severity": "warning",
                 })
@@ -170,7 +170,7 @@ def detect_campaign_actions(
                 issues.append({
                     "metric": "cpc",
                     "label": "CPC",
-                    "description": f"CPC가 7일 평균 대비 {cpc_change:+.1f}% 상승 (\u20a9{int(cpc_avg):,} \u2192 \u20a9{int(cpc_today):,})",
+                    "description": f"CPC가 7일 평균 대비 {cpc_change:+.1f}% 상승 (${int(cpc_avg):,} \u2192 ${int(cpc_today):,})",
                     "action": "경쟁 심화 가능성. 타겟 확장 또는 소재 변경 권장",
                     "severity": "warning",
                 })
@@ -258,7 +258,7 @@ def detect_creative_fatigue(
             recent_cpcs = [h.get("cpc", 0.0) for h in history_sorted[-(THRESHOLDS["consecutive_decline_days"]):]]
             recent_cpcs.append(ad.get("cpc", 0.0))
             if _detect_consecutive_increase(recent_cpcs[-THRESHOLDS["consecutive_decline_days"]:]):
-                vals = " \u2192 ".join(f"\u20a9{int(v):,}" for v in recent_cpcs[-THRESHOLDS["consecutive_decline_days"]:])
+                vals = " \u2192 ".join(f"${int(v):,}" for v in recent_cpcs[-THRESHOLDS["consecutive_decline_days"]:])
                 issues.append({
                     "metric": "cpc_trend",
                     "label": "CPC 추세",
