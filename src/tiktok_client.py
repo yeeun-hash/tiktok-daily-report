@@ -124,6 +124,7 @@ def get_account_report(date: str) -> dict:
         metrics=ACCOUNT_METRICS,
         start_date=date,
         end_date=date,
+        dimensions=["advertiser_id"],
     )
     data = _make_request(payload)
     rows = data.get("data", {}).get("list", [])
