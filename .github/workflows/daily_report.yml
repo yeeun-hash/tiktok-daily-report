@@ -1,0 +1,31 @@
+name: TikTok Daily Report
+
+on:
+  schedule:
+    - cron: '0 23 * * *'   # UTC 23:00 = KST 08:00
+  workflow_dispatch:         # 수동 실행 가능 (테스트용)
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily report
+        run: python src/main.py
+        env:
+          TIKTOK_APP_ID: ${{ secrets.TIKTOK_APP_ID }}
+          TIKTOK_SECRET: ${{ secrets.TIKTOK_SECRET }}
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          TIKTOK_ADVERTISER_ID: ${{ secrets.TIKTOK_ADVERTISER_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
