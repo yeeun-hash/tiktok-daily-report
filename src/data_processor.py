@@ -65,7 +65,11 @@ def calculate_completion_rate(ad: dict) -> float:
 
 
 def format_currency(amount: float) -> str:
-    return f"₩{int(amount):,}"
+    if amount >= 1:
+        return f"₩{int(amount):,}"
+    if amount > 0:
+        return f"₩{amount:.2f}"
+    return "₩0"
 
 
 def format_percentage(value: float, with_sign: bool = True) -> str:
