@@ -153,7 +153,7 @@ def get_ad_report(date: str) -> list[dict]:
         metrics=AD_METRICS,
         start_date=date,
         end_date=date,
-        dimensions=["ad_id", "campaign_id"],
+        dimensions=["ad_id"],
     )
     data = _make_request(payload)
     rows = data.get("data", {}).get("list", [])
@@ -173,7 +173,7 @@ def get_report_range(
         dimensions = ["campaign_id", "stat_time_day"]
     else:
         metrics = AD_METRICS
-        dimensions = ["ad_id", "campaign_id", "stat_time_day"]
+        dimensions = ["ad_id", "stat_time_day"]
 
     payload = _build_payload(
         data_level=level,
